@@ -81,8 +81,12 @@ const LoginButton: React.FC<LoginButtonProps> = ({ onLoginSuccess, onLogout }) =
       }
     } catch (error) {
       console.error('Erro detalhado:', error);
-      setMessage(`Erro ao conectar: ${error.message}`);
-      setLoading(false); // Importante: garantir que loading seja false em caso de erro
+      if (error instanceof Error) {
+        setMessage(`Erro ao conectar: ${error.message}`);
+      } else {
+        setMessage('Erro ao conectar: Erro desconhecido');
+      }
+      setLoading(false);
     }
   };
 
